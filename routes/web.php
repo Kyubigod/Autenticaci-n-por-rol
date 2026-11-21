@@ -30,6 +30,6 @@ Route::get('/email/verify', function () {
 })->middleware('auth')->name('verification.notice');
 
 Route::middleware('auth')->group(function () {
-    Route::get('verify', [TwoFactorCodeController::class, 'verify'])->name('verify');
+    Route::get('verify', [TwoFactorCodeController::class, 'verify'])->middleware('signed')->name('verify');
     Route::post('verify', [TwoFactorCodeController::class, 'verifyPost'])->name('verify.post');
 });
