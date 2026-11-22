@@ -10,12 +10,13 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
-#[Fillable(['name', 'email', 'password', 'rol', 'two_factor_code', 'two_factor_expires_at'])]
+#[Fillable(['name', 'email', 'password', 'rol', 'two_factor_code', 'two_factor_expires_at', 'SoftDeletes'])]
 #[Hidden(['password', 'remember_token'])]
 class User extends Authenticatable {
     /** @use HasFactory<UserFactory> */
-    use HasFactory, Notifiable;
+    use HasFactory, Notifiable, SoftDeletes;
 
     /**
      * Get the attributes that should be cast.
