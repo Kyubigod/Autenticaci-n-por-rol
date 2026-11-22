@@ -4,6 +4,8 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TwoFactorCodeController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\AlumnoController;
+
 Route::get('/', function () {
     return view('welcome');
 });
@@ -26,6 +28,14 @@ Route::middleware(['auth', 'two.factor', 'role:admin'])->group(function () {
     Route::patch('users/{id}/restore', [UserController::class, 'restore'])->name('users.restore');
     Route::delete('users/{id}/force-delete', [UserController::class, 'forceDelete'])->name('users.forceDelete');
 });
+
+Route::middleware(['auth', 'role:profesor'])->group(function () {
+    Route::resource('alumnos', AlumnoController::class)->except(['index', 'show']);
+});
+
+Route::get('/alumnos', [AlumnoController::class, 'index'])
+    ->middleware(['auth', 'role:profesor,alumno'])
+    ->name('alumnos.index');
 
 
 Route::middleware('auth')->group(function () {

@@ -47,4 +47,9 @@ class User extends Authenticatable {
         $this->two_factor_expires_at = null;
         $this->save();
     }
+
+    public function alumno()
+    {
+        return $this->hasOne(Alumno::class);    
+    }
 }

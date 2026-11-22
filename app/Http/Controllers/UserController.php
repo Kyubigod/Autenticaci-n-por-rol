@@ -39,7 +39,7 @@ class UserController extends Controller
         'name' => 'required|string|max:255',
         'email' => 'required|string|email|max:255|unique:users',
         'password' => 'required|string|min:8|confirmed',
-        'rol' => 'required|string|in:admin,empleado',
+        'rol' => 'required|string|in:admin,empleado,alumno,profesor'
         
 
        ]);
@@ -94,7 +94,7 @@ class UserController extends Controller
         'name' => 'required|string|max:255',
         'email' => 'required|string|email|max:255|unique:users,email,' . $id,
         'password' => 'nullable|string|min:8|confirmed',
-        'rol' => 'nullable|string|in:admin,empleado',
+        'rol' => 'nullable|string|in:admin,empleado,alumno,profesor',
     ]);
 
     $datos = [
@@ -144,6 +144,8 @@ class UserController extends Controller
         $user -> forceDelete();
         return redirect()->route('users.index') -> with ('success', 'Eliminado Correctamente');
     }
+
+
 
 
 

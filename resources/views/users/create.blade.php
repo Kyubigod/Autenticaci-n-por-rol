@@ -41,6 +41,8 @@
                                     class="mt-1 block w-full rounded-md border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-100 shadow-sm focus:border-indigo-500 focus:ring-indigo-500">
                                 <option value="empleado" {{ old('rol') === 'empleado' ? 'selected' : '' }}>Empleado</option>
                                 <option value="admin" {{ old('rol') === 'admin' ? 'selected' : '' }}>Administrador</option>
+                                <option value="profesor" {{ old('rol') === 'profesor' ? 'selected' : '' }}>Profesor</option>
+                                <option value="alumno" {{ old('rol') === 'alumno' ? 'selected' : '' }}>Alumno</option>
                             </select>
                         </div>
                     @endif
