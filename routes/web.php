@@ -88,3 +88,33 @@ Route::middleware('auth')->group(function () {
     Route::get('verify', [TwoFactorCodeController::class, 'verify'])->middleware('signed')->name('verify');
     Route::post('verify', [TwoFactorCodeController::class, 'verifyPost'])->name('verify.post');
 });
+
+use App\Http\Controllers\PartidaController;
+
+// Acceso compartido al Lobby/Historial (Admin ve historial global; Jugador ve lobby)
+Route::middleware(['auth', 'two.factor', 'role:admin,jugador'])->group(function () {
+    Route::get('/gato', [PartidaController::class, 'index'])->name('gato.index');
+    Route::get('/gato/{partida}', [PartidaController::class, 'show'])->name('gato.show');
+    Route::get('/gato/{partida}/estado', [PartidaController::class, 'estado'])->name('gato.estado');
+});
+
+
+
+
+Route::middleware(['auth', 'two.factor', 'role:admin,jugador'])->group(function () {
+    Route::get('/gato', [PartidaController::class, 'index'])->name('gato.index');
+    Route::get('/gato/{partida}', [PartidaController::class, 'show'])->name('gato.show');
+    Route::get('/gato/{partida}/estado', [PartidaController::class, 'estado'])->name('gato.estado');
+});
+
+Route::middleware(['auth', 'two.factor', 'role:jugador'])->group(function () {
+    Route::post('/gato', [PartidaController::class, 'store'])->name('gato.store');
+    Route::post('/gato/{partida}/unirse', [PartidaController::class, 'unirse'])->name('gato.unirse');
+    Route::post('/gato/{partida}/jugar/{casilla}', [PartidaController::class, 'moverSimple'])->name('gato.jugar');
+    Route::post('/gato/{partida}/mover', [PartidaController::class, 'mover'])->name('gato.mover');
+    Route::post('/gato/{partida}/abandonar', [PartidaController::class, 'abandonar'])->name('gato.abandonar');
+});
+
+Route::middleware(['auth', 'two.factor', 'role:admin'])->group(function () {
+    Route::patch('/gato/{partida}/cancelar', [PartidaController::class, 'cancelarAdmin'])->name('gato.cancelarAdmin');
+});

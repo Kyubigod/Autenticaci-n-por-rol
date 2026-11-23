@@ -57,4 +57,13 @@ class User extends Authenticatable {
 {
     return $this->hasMany(Reservacion::class);
 }
+public function partidasComoX()
+    {
+        return $this->hasMany(Partida::class, 'jugador_x_id');
+    }
+
+    public function partidasComoO()
+    {
+        return $this->hasMany(Partida::class, 'jugador_o_id');
+    }
 }

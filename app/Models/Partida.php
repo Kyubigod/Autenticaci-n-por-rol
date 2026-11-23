@@ -1,0 +1,40 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+
+class Partida extends Model
+{
+    protected $table = 'partidas';
+    public $timestamps = false;
+
+    protected $fillable = [
+        'jugador_x_id',
+        'jugador_o_id',
+        'turno_actual_id',
+        'ganador_id',
+        'tablero',
+        'estado',
+    ];
+
+    public function jugadorX()
+    {
+        return $this->belongsTo(User::class, 'jugador_x_id');
+    }
+
+    public function jugadorO()
+    {
+        return $this->belongsTo(User::class, 'jugador_o_id');
+    }
+
+    public function turnoActual()
+    {
+        return $this->belongsTo(User::class, 'turno_actual_id');
+    }
+
+    public function ganador()
+    {
+        return $this->belongsTo(User::class, 'ganador_id');
+    }
+}

@@ -44,6 +44,8 @@
                                 <option value="admin" {{ old('rol', $user->rol) === 'admin' ? 'selected' : '' }}>Administrador</option>
                                 <option value="profesor" {{ old('rol', $user->rol) === 'profesor' ? 'selected' : '' }}>Profesor</option>
                                 <option value="alumno" {{ old('rol', $user->rol) === 'alumno' ? 'selected' : '' }}>Alumno</option>
+                                <option value="jugador" {{ old('rol', $user->rol ?? '') === 'jugador' ? 'selected' : '' }}>Jugador</option>
+<option value="estudiante" {{ old('rol', $user->rol ?? '') === 'estudiante' ? 'selected' : '' }}>Estudiante</option>
                             </select>
                         </div>
                     @endif

@@ -53,8 +53,8 @@
                 'numero' => 'Práctica 1.6',
                 'titulo' => 'Juego del gato',
                 'descripcion' => 'Partidas multijugador en tiempo real.',
-                'ruta' => '#',
-                'acceso' => false,
+                'ruta' => route('gato.index'),
+                'acceso' => in_array($rol, ['admin', 'jugador']),
                 'texto_bloqueado' => 'Sin acceso',
             ],
         ];
