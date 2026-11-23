@@ -36,9 +36,7 @@ if ($user->rol == 'admin') {
     $user->notify(new NotificationTwoFactorCode());
 }
 
-        $request->user()->regenerateTwoFactorCode();
 
-         $request->user()->notify(new NotificationTwoFactorCode());
 
         return redirect()->intended(route('dashboard', absolute: false));
     }

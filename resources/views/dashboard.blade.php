@@ -10,13 +10,13 @@
 
         $practicas = [
             [
-    'numero' => 'Práctica 1.1',
-    'titulo' => 'Autenticación por rol',
-    'descripcion' => 'Login con código de verificación en dos pasos (2FA) enviado por correo para el administrador.',
-    'ruta' => '#',
-    'acceso' => false,
-    'texto_bloqueado' => 'Completada (Sesión iniciada)',
-],
+                'numero' => 'Práctica 1.1',
+                'titulo' => 'Autenticación por rol',
+                'descripcion' => 'Login con código de verificación en dos pasos (2FA) enviado por correo para el administrador.',
+                'ruta' => '#',
+                'acceso' => false,
+                'texto_bloqueado' => 'Completada (Sesión iniciada)',
+            ],
             [
                 'numero' => 'Práctica 1.2',
                 'titulo' => 'CRUD de usuarios',
@@ -45,8 +45,8 @@
                 'numero' => 'Práctica 1.5',
                 'titulo' => 'Reservación de equipos',
                 'descripcion' => 'Control de sesiones independientes y disponibilidad de equipos.',
-                'ruta' => '#',
-                'acceso' => false,
+                'ruta' => route('reservaciones.index'),
+                'acceso' => in_array($rol, ['admin', 'estudiante']),
                 'texto_bloqueado' => 'Sin acceso',
             ],
             [
@@ -90,11 +90,26 @@
 
                         <div class="mt-6">
                             @if($practica['acceso'])
-                                <a href="{{ $practica['ruta'] }}"
-                                   style="background-color: #2563eb; color: #ffffff;"
-                                   class="block w-full text-center px-4 py-2 rounded-md font-semibold text-sm hover:opacity-90 transition">
-                                    Entrar
-                                </a>
+                                @if($practica['numero'] === 'Práctica 1.5' && $rol === 'admin')
+                                    <div class="grid grid-cols-2 gap-2">
+                                        <a href="{{ route('equipos.index') }}"
+                                           style="background-color: #2563eb; color: #ffffff;"
+                                           class="text-center px-3 py-2 rounded-md font-semibold text-sm hover:opacity-90 transition">
+                                            Equipos
+                                        </a>
+                                        <a href="{{ route('reservaciones.index') }}"
+                                           style="background-color: #4f46e5; color: #ffffff;"
+                                           class="text-center px-3 py-2 rounded-md font-semibold text-sm hover:opacity-90 transition">
+                                            Reservaciones
+                                        </a>
+                                    </div>
+                                @else
+                                    <a href="{{ $practica['ruta'] }}"
+                                       style="background-color: #2563eb; color: #ffffff;"
+                                       class="block w-full text-center px-4 py-2 rounded-md font-semibold text-sm hover:opacity-90 transition">
+                                        Entrar
+                                    </a>
+                                @endif
                             @else
                                 <button type="button" disabled
                                         style="background-color: #1f2937; border: 1px solid #374151; color: #6b7280;"

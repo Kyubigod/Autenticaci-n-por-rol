@@ -6,6 +6,8 @@ use App\Http\Controllers\TwoFactorCodeController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AlumnoController;
 use App\Http\Controllers\ProductoController;
+use App\Http\Controllers\EquipoController;
+use App\Http\Controllers\ReservacionController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -44,6 +46,19 @@ Route::middleware(['auth', 'two.factor', 'role:admin'])->group(function () {
     Route::get('productos/{producto}/edit', [ProductoController::class, 'edit'])->name('productos.edit');
     Route::put('productos/{producto}', [ProductoController::class, 'update'])->name('productos.update');
     Route::delete('productos/{producto}', [ProductoController::class, 'destroy'])->name('productos.destroy');
+});
+
+
+// Rutas exclusivas del Administrador para el CRUD de equipos de cómputo
+Route::middleware(['auth', 'two.factor', 'role:admin'])->group(function () {
+    Route::resource('equipos', EquipoController::class)->except(['show']);
+});
+
+// Rutas compartidas entre Administrador y Estudiante para consultar, crear y cancelar reservaciones
+Route::middleware(['auth', 'two.factor', 'role:admin,estudiante'])->group(function () {
+    Route::get('/reservaciones', [ReservacionController::class, 'index'])->name('reservaciones.index');
+    Route::post('/reservaciones', [ReservacionController::class, 'store'])->name('reservaciones.store');
+    Route::patch('/reservaciones/{reservacion}/cancelar', [ReservacionController::class, 'cancelar'])->name('reservaciones.cancelar');
 });
 
 Route::get('/alumnos', [AlumnoController::class, 'index'])
