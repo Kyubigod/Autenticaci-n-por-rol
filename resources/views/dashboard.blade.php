@@ -37,8 +37,8 @@
                 'numero' => 'Práctica 1.4',
                 'titulo' => 'Gestión de productos',
                 'descripcion' => 'Catálogo con paginación, filtros dinámicos y ordenamiento.',
-                'ruta' => '#',
-                'acceso' => false,
+                'ruta' => route('productos.index'),
+                'acceso' => in_array($rol, ['admin', 'empleado']),
                 'texto_bloqueado' => 'Sin acceso',
             ],
             [

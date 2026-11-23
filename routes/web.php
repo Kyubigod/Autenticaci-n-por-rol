@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TwoFactorCodeController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AlumnoController;
+use App\Http\Controllers\ProductoController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -31,6 +32,18 @@ Route::middleware(['auth', 'two.factor', 'role:admin'])->group(function () {
 
 Route::middleware(['auth', 'role:profesor'])->group(function () {
     Route::resource('alumnos', AlumnoController::class)->except(['index', 'show']);
+});
+
+Route::middleware(['auth', 'two.factor', 'role:admin,empleado'])->group(function () {
+    Route::get('productos', [ProductoController::class, 'index'])->name('productos.index');
+});
+
+Route::middleware(['auth', 'two.factor', 'role:admin'])->group(function () {
+    Route::get('productos/create', [ProductoController::class, 'create'])->name('productos.create');
+    Route::post('productos', [ProductoController::class, 'store'])->name('productos.store');
+    Route::get('productos/{producto}/edit', [ProductoController::class, 'edit'])->name('productos.edit');
+    Route::put('productos/{producto}', [ProductoController::class, 'update'])->name('productos.update');
+    Route::delete('productos/{producto}', [ProductoController::class, 'destroy'])->name('productos.destroy');
 });
 
 Route::get('/alumnos', [AlumnoController::class, 'index'])
